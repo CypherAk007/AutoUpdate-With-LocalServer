@@ -43,7 +43,7 @@ public class ShowNote extends Activity {
                 Toast.makeText(getApplicationContext(), "App Downloading...Please Wait", Toast.LENGTH_LONG).show();
                 dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
 
-                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"rn-update-apk-example-3.0.1.apk");
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"Live247.apk");
                 if(file.exists()){
 
                     isDeleted = file.delete();
@@ -82,8 +82,8 @@ public class ShowNote extends Activity {
 
     private void downloadAndInstall() {
         DownloadManager.Request request = new DownloadManager.Request(
-                Uri.parse("https://mbhospital.live247.ai/mobileApk/rn-update-apk-example-3.0.1.apk"));
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "rn-update-apk-example-3.0.1.apk");
+                Uri.parse("https://mbhospital.live247.ai/mobileApk/Live247.apk"));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "Live247.apk");
 
         enqueue = dm.enqueue(request);
 
@@ -115,11 +115,11 @@ public class ShowNote extends Activity {
                                 if(isRooted()==false){
                                     Log.d("sudks","entered the not rooted");
 
-//                                    File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"rn-update-apk-example-3.0.1.apk");
-                                    File file = new File( Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"rn-update-apk-example-3.0.1.apk");
+//                                    File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"Live247.apk");
+                                    File file = new File( Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/Live247.apk");
 //                                    Log.d("sudks", "installApk: file doe snot exist '" + file + "'");
                                     if (!file.exists()) {
-                                        Log.e("sudks", "installApk: file does not exist '" + file + "'");
+                                        Log.e("sudks", "installApk: file does not exist '" + file + "'" + "  "+ Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
                                         // FIXME this should take a promise and fail it
                                         return;
                                     }
@@ -162,7 +162,7 @@ public class ShowNote extends Activity {
                                         }
                                         intent = new Intent(Intent.ACTION_VIEW);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        intent.setDataAndType(Uri.parse("file://" +Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"rn-update-apk-example-3.0.1.apk" ), "application/vnd.android.package-archive");
+                                        intent.setDataAndType(Uri.parse("content://" +Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"Live247.apk" ), "application/vnd.android.package-archive");
                                         context.startActivity(intent);
                                     }
 
@@ -170,12 +170,12 @@ public class ShowNote extends Activity {
 //                                    Intent intent_install = new Intent(Intent.ACTION_VIEW);
 
 //                                    1st
-//                                    intent_install.setDataAndType(Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"rn-update-apk-example-3.0.1.apk")), "application/vnd.android.package-archive");
+//                                    intent_install.setDataAndType(Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"Live247.apk")), "application/vnd.android.package-archive");
 //
 ////                                    2nd(Parsing error)
 //                                    intent_install.setDataAndType(FileProvider.getUriForFile(context,
-//                                            BuildConfig.APPLICATION_ID + ".provider",new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"rn-update-apk-example-3.0.1.apk")), "application/vnd.android.package-archive");
-//                                    Log.d("phone path","/storage/emulated/0/Download/rn-update-apk-example-3.0.1.apk");
+//                                            BuildConfig.APPLICATION_ID + ".provider",new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"Live247.apk")), "application/vnd.android.package-archive");
+//                                    Log.d("phone path","/storage/emulated/0/Download/Live247.apk");
 //                                    startActivity(intent_install);
 //                                    Toast.makeText(getApplicationContext(), "App Installing", Toast.LENGTH_LONG).show();
                                 }
@@ -183,14 +183,14 @@ public class ShowNote extends Activity {
                                     //if your device is rooted then you can install or update app in background directly
                                     Log.d("sudks:", "downloadId != c.getInt(0)");
                                     Toast.makeText(getApplicationContext(), "App Installing...Please Wait", Toast.LENGTH_LONG).show();
-                                    File file = new File("/storage/emulated/0/Download/rn-update-apk-example-3.0.1.apk");
-                                    Log.d("sudks:", "/storage/emulated/0/Download/rn-update-apk-example-3.0.1.apk"+"  in downloadId != c.getInt(0) ");
+                                    File file = new File("/storage/emulated/0/Download/Live247.apk");
+                                    Log.d("sudks:", "/storage/emulated/0/Download/Live247.apk"+"  in downloadId != c.getInt(0) ");
                                     if(file.exists()){
                                         try {
                                             String command;
-                                            Log.d("sudks:","/mnt/sdcard/Download/rn-update-apk-example-3.0.1.apk");
+                                            Log.d("sudks:","/mnt/sdcard/Download/Live247.apk");
 
-                                            command = "pm install -r " + "/mnt/sdcard/Download/rn-update-apk-example-3.0.1.apk";
+                                            command = "pm install -r " + "/mnt/sdcard/Download/Live247.apk";
                                             Log.d("COMMAND:",command);
                                             Process proc = Runtime.getRuntime().exec(new String[] { "su", "-c", command });
                                             proc.waitFor();
@@ -244,7 +244,7 @@ public class ShowNote extends Activity {
     }
 //    public  void deletePackage(){Intent intent = new Intent(Intent.ACTION_DELETE, Uri.fromParts("package",
 //            getPackageManager().getPackageArchiveInfo(FileProvider.getUriForFile(,
-//                                            BuildConfig.APPLICATION_ID + ".provider",new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"rn-update-apk-example-3.0.1.apk")), 0).packageName,null));
+//                                            BuildConfig.APPLICATION_ID + ".provider",new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"Live247.apk")), 0).packageName,null));
 //        startActivity(intent);}
 
 }

@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,7 +35,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.List;
+import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
 
@@ -77,20 +86,82 @@ public class MainActivity<Main> extends AppCompatActivity {
         install.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_install = new Intent(Intent.ACTION_VIEW);
-//                intent_install.setDataAndType(Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"Json_02.apk")), "application/vnd.android.package-archive");
-                intent_install.setDataAndType(FileProvider.getUriForFile(context,
-                                                            BuildConfig.APPLICATION_ID + ".provider",new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/"+"rn-update-apk-example-3.0.1.apk")), "application/vnd.android.package-archive");Log.d("phone path","/storage/emulated/0/Download/rn-update-apk-example-3.0.1");
-                startActivity(intent_install);
+//                Intent intent_install = new Intent(Intent.ACTION_VIEW);
+//                intent_install.setDataAndType(Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/Json_02.apk")), "application/vnd.android.package-archive");
+////                intent_install.setDataAndType(FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/Json_02.apk")), "application/vnd.android.package-archive");
+////                intent_install.setDataAndType(FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",new File("context:///storage/0403-0201/Download/Json_02.apk")), "application/vnd.android.package-archive");
+////                Log.d("phone path","/storage/emulated/0/Download/Live247.apk");
+//
+//                Log.d("phone path","/storage/emulated/0/Download/Json_02.apk");
+//                Log.d("phone path1", String.valueOf((FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/Json_02.apk"), "application/vnd.android.package-archive"))));
+////                Toast.makeText(context, String.valueOf((FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/Json_02.apk"), "application/vnd.android.package-archive"))), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, String.valueOf((FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",new File("/storage/emulated/0/Download/Json_02.apk"), "application/vnd.android.package-archive"))), Toast.LENGTH_SHORT).show();
+//                startActivity(intent_install);
+//--------------------------------------------------------------------------------------------------------------------------------------
+//                installApk2();
+//--------------------------------------------------------------------------------------------------------------------------------------
+try {
+    installApk(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/app-debug.apk", BuildConfig.APPLICATION_ID + ".provider");//parsing error.
 
-                Toast.makeText(getApplicationContext(), "App Installing", Toast.LENGTH_LONG).show();
+    Log.d("isudks", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/app-debug.apk");
+    Toast.makeText(context, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/app-debug.apk", Toast.LENGTH_SHORT).show();
+}
+catch (Exception e) {
+    Log.d("isudks", "enterd first catch" + "/app-debug.apk");
+    e.printStackTrace();
+    Log.d("isudks", e + "/Json_02.apk");
+    Toast.makeText(context, e+"/Json_02.apk ", Toast.LENGTH_SHORT).show();
+}
+
+
             }
         });
         getAppVersion();
-
-
+//        Toast.makeText(context, String.valueOf((FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/Json_02.apk"), "application/vnd.android.package-archive"))), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, String.valueOf((FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",new File("/storage/emulated/0/Download/Json_02.apk"), "application/vnd.android.package-archive"))), Toast.LENGTH_LONG).show();
+//        Log.d("sudks", String.valueOf((FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/Json_02.apk"), "application/vnd.android.package-archive"))));
     }
-
+//    protected String doInBackground(String... sUrl) {
+//        String path = "/sdcard/YourApp.apk";
+//        try {
+//            URL url = new URL(sUrl[0]);
+//            URLConnection connection = url.openConnection();
+//            connection.connect();
+//
+//            int fileLength = connection.getContentLength();
+//
+//            // download the file
+//            InputStream input = new BufferedInputStream(url.openStream());
+//            OutputStream output = new FileOutputStream(path);
+//
+//            byte data[] = new byte[1024];
+//            long total = 0;
+//            int count;
+//            while ((count = input.read(data)) != -1) {
+//                total += count;
+//                publishProgress((int) (total * 100 / fileLength));
+//                output.write(data, 0, count);
+//            }
+//
+//            output.flush();
+//            output.close();
+//            input.close();
+//        } catch (Exception e) {
+//            Log.e("YourApp", "Well that didn't work out so well...");
+//            Log.e("YourApp", e.getMessage());
+//        }
+//        return path;
+//    }
+//
+//    // begin the installation by opening the resulting file
+//    @Override
+//    protected void onPostExecute(String path) {
+//        Intent i = new Intent();
+//        i.setAction(Intent.ACTION_VIEW);
+//        i.setDataAndType(Uri.fromFile(new File(path)), "application/vnd.android.package-archive" );
+//        Log.d("Lofting", "About to install new .apk");
+//        this.context.startActivity(i);
+//    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -373,6 +444,34 @@ atualizaApp = new UpdateApp();
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setDataAndType(Uri.parse("file://" + file), "application/vnd.android.package-archive");
             context.startActivity(intent);
+        }
+    }
+
+    private void installApk2() {
+        try {
+            String PATH = Objects.requireNonNull(context.getExternalFilesDir(null)).getAbsolutePath();
+            Log.d("sudks",PATH);
+            File file = new File(PATH + "/Json_020.apk");
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            if (Build.VERSION.SDK_INT >= 24) {
+                Uri downloaded_apk = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+                intent.setDataAndType(downloaded_apk, "application/vnd.android.package-archive");
+                List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                for (ResolveInfo resolveInfo : resInfoList) {
+                    context.grantUriPermission(context.getApplicationContext().getPackageName() + ".provider", downloaded_apk, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                }
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(intent);
+            } else {
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true);
+                intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

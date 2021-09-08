@@ -21,7 +21,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="29dp"
-        android:text="parse" />
+        android:text="Install" />
 
     <Button
         android:id="@+id/install"
